@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uide Fast Food — Меню</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ffc107;
+            --dark: #121212;
+            --card-bg: #1e1e1e;
+            --text-light: #ffffff;
+            --text-gray: #aaaaaa;
+            --accent: #ff4757;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text-light);
+            padding-bottom: 90px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            padding: 15px;
+            border-bottom: 3px solid var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            color: var(--primary);
+            font-size: 22px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .lang-btn {
+            background: var(--card-bg);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .info-block {
+            font-size: 11px;
+            color: var(--text-gray);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 10px;
+            border-radius: 8px;
+            line-height: 1.4;
+        }
+
+        .info-block span {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .info-block a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .search-box {
+            padding: 10px 15px;
+            background: var(--dark);
+            position: sticky;
+            top: 135px;
+            z-index: 99;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: 1px solid #333;
+            background: var(--card-bg);
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .categories {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 5px 15px 10px 15px;
+            scrollbar-width: none;
+        }
+
+        .categories::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-btn {
+            background: var(--card-bg);
+            color: var(--text-light);
+            border: 1px solid #333;
+            padding: 8px 14px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .cat-btn.active {
+            background: var(--primary);
+            color: var(--dark);
+            border-color: var(--primary);
+        }
+
+        .container {
+            padding: 10px 15px;
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 18px;
+            font-weight: 700;
+            margin: 20px 0 10px 0;
+            text-transform: uppercase;
+            border-left: 4px solid var(--primary);
+            padding-left: 8px;
+        }
+
+        .menu-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #2a2a2a;
+        }
+
+        .item-info {
+            flex-grow: 1;
+            padding-right: 10px;
+        }
+
+        .item-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .item-price {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .add-btn {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .cart-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #1a1a1a;
+            border-top: 2px solid var(--primary);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .cart-info {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .cart-btn {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            width: 100%;
+            max-height: 80vh;
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .cart-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            border-bottom: 1px solid #2a2a2a;
+            padding-bottom: 8px;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qty-btn {
+            background: #333;
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            margin-top: 15px;
+            cursor: pointer;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <h1>Uide Fast Food</h1>
+            <button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">KZ / RU</button>
+        </div>
+        <div class="info-block" id="infoBlock">
+            📍 Адрес: с. Караул, ул. Ералы 22Б<br>
+            📞 Тел/WhatsApp: <a href="https://wa.me/77002302331">+7 700 230 23 31</a><br>
+            🚀 Информация: <span id="deliveryText">Доставка есть</span>
+        </div>
+    </header>
+
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Поиск блюд и напитков..." onkeyup="filterMenu()">
+    </div>
+
+    <div class="categories" id="categoriesContainer"></div>
+
+    <div class="container" id="menuContainer"></div>
+
+    <div class="cart-bar" id="cartBar" style="display: none;">
+        <div class="cart-info" id="cartInfo">В корзине: 0 шт.</div>
+        <button class="cart-btn" id="orderBtnText" onclick="openCart()">Заказать</button>
+    </div>
+
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="cartModalTitle">Корзина</h3>
+                <button class="close-modal" onclick="closeCart()">✕</button>
+            </div>
+            <div id="cartItemsList"></div>
+            <div style="margin-top: 15px; font-weight: 700; font-size: 16px;" id="cartTotalSum">Итого: 0 тг</div>
+            <button class="checkout-btn" id="checkoutBtnText" onclick="sendToWhatsApp()">Отправить заказ в WhatsApp</button>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'ru';
+
+        const translations = {
+            ru: {
+                searchPlaceholder: "Поиск блюд и напитков...",
+                delivery: "Доставка есть",
+                inCart: "В корзине:",
+                order: "Заказать",
+                cartTitle: "Корзина",
+                total: "Итого:",
+                checkout: "Отправить заказ в WhatsApp",
+                addToCart: "В корзину",
+                notFound: "Ничего не найдено",
+                cats: {
+                    all: "Все",
+                    doner: "Донеры",
+                    burger: "Бургеры",
+                    pizza: "Пицца",
+                    breakfast: "Завтраки и супы",
+                    snack: "Закуски и фастфуд",
+                    drink: "Напитки",
+                    coffee: "Коктейли и кофе"
+                }
+            },
+            kz: {
+                searchPlaceholder: "Тағамдар мен сусындарды іздеу...",
+                delivery: "Жеткізу бар",
+                inCart: "Себетте:",
+                order: "Тапсырыс беру",
+                cartTitle: "Себет",
+                total: "Барлығы:",
+                checkout: "WhatsApp-қа тапсырыс жіберу",
+                addToCart: "Себетке",
+                notFound: "Ештеңе табылмады",
+                cats: {
+                    all: "Барлығы",
+                    doner: "Донерлер",
+                    burger: "Бургерлер",
+                    pizza: "Пицца",
+                    breakfast: "Таңғы ас пен сорпалар",
+                    snack: "Тілсемдер мен фастфуд",
+                    drink: "Сусындар",
+                    coffee: "Коктейльдер мен кофе"
+                }
+            }
+        };
+
+        const menuData = [
+            { id: 1, cat: 'doner', name: { ru: 'Донер классический (курица / мясо)', kz: 'Классикалық донер (тауық / ет)' }, price: 1600 },
+            { id: 2, cat: 'doner', name: { ru: 'Донер сырный (курица / мясо)', kz: 'Ірімшікті донер (тауық / ет)' }, price: 1600 },
+            { id: 3, cat: 'doner', name: { ru: 'Донер фирменный (курица / мясо)', kz: 'Фирмалық донер (тауық / ет)' }, price: 1600 },
+            { id: 4, cat: 'doner', name: { ru: 'Донер говяжий', kz: 'Сиыр етінен донер' }, price: 2000 },
+            { id: 5, cat: 'doner', name: { ru: 'Донер жареный', kz: 'Қуырылған донер' }, price: 1800 },
+            { id: 6, cat: 'doner', name: { ru: 'Батон донер', kz: 'Батон донер' }, price: 1900 },
+            { id: 7, cat: 'doner', name: { ru: 'Твистер', kz: 'Твистер' }, price: 1800 },
+            { id: 8, cat: 'burger', name: { ru: 'Бургер говяжий', kz: 'Сиыр етінен бургер' }, price: 1800 },
+            { id: 9, cat: 'burger', name: { ru: 'Бургер со стрипсами', kz: 'Стрипстер қосылған бургер' }, price: 1600 },
+            { id: 10, cat: 'pizza', name: { ru: 'Пицца Пепперони', kz: 'Пепперони пиццасы' }, price: 2500 },
+            { id: 11, cat: 'pizza', name: { ru: 'Пицца Куриный', kz: 'Тауық етінен пицца' }, price: 2500 },
+            { id: 12, cat: 'pizza', name: { ru: 'Пицца Маргарита', kz: 'Маргарита пиццасы' }, price: 2300 },
+            { id: 13, cat: 'pizza', name: { ru: 'Пицца 4 сезона', kz: '4 маусым пиццасы' }, price: 2800 },
+            { id: 14, cat: 'breakfast', name: { ru: 'Английский завтрак', kz: 'Ағылшынша таңғы ас' }, price: 1800 },
+            { id: 15, cat: 'breakfast', name: { ru: 'Том ям', kz: 'Том ям' }, price: 3900 },
+            { id: 16, cat: 'breakfast', name: { ru: 'Классический рамен', kz: 'Классикалық рамен' }, price: 1700 },
+            { id: 17, cat: 'breakfast', name: { ru: 'Сырный рамен', kz: 'Ірімшікті рамен' }, price: 2200 },
+            { id: 18, cat: 'snack', name: { ru: 'Френч дог', kz: 'Френч дог' }, price: 1400 },
+            { id: 19, cat: 'snack', name: { ru: 'Острые куриные крылышки (10 шт)', kz: 'Ащы тауық қанаттары (10 дана)' }, price: 1950 },
+            { id: 20, cat: 'snack', name: { ru: 'Острые куриные крылышки (20 шт)', kz: 'Ащы тауық қанаттары (20 дана)' }, price: 3950 },
+            { id: 21, cat: 'snack', name: { ru: 'Острые куриные крылышки (30 шт)', kz: 'Ащы тауық қанаттары (30 дана)' }, price: 5950 },
+            { id: 22, cat: 'snack', name: { ru: 'Острые куриные крылышки (40 шт)', kz: 'Ащы тауық қанаттары (40 дана)' }, price: 7950 },
+            { id: 23, cat: 'snack', name: { ru: 'Наггетсы (10 шт)', kz: 'Наггетстер (10 дана)' }, price: 1800 },
+            { id: 24, cat: 'snack', name: { ru: 'Жареный судак (0.5 кг)', kz: 'Қуырылған судак (0.5 кг)' }, price: 3500 },
+            { id: 25, cat: 'snack', name: { ru: 'Фри', kz: 'Фри картобы' }, price: 800 },
+            { id: 26, cat: 'snack', name: { ru: 'Фри с сосиской', kz: 'Сосискасы бар фри' }, price: 1200 },
+            { id: 27, cat: 'drink', name: { ru: 'Кока кола 1л', kz: 'Кока кола 1л' }, price: 850 },
+            { id: 28, cat: 'drink', name: { ru: 'Кока Кола 0.5 л', kz: 'Кока Кола 0.5 л' }, price: 600 },
+            { id: 29, cat: 'drink', name: { ru: 'Фанта', kz: 'Фанта' }, price: 850 },
+            { id: 30, cat: 'drink', name: { ru: 'Спрайт', kz: 'Спрайт' }, price: 850 },
+            { id: 31, cat: 'drink', name: { ru: 'Пиала', kz: 'Пиала' }, price: 850 },
+            { id: 32, cat: 'drink', name: { ru: 'Фьюс ти', kz: 'Фьюс ти' }, price: 850 },
+            { id: 33, cat: 'drink', name: { ru: 'Ава лимонад 1л', kz: 'Ава лимонад 1л' }, price: 850 },
+            { id: 34, cat: 'drink', name: { ru: 'Ава апельсин', kz: 'Ава апельсин' }, price: 850 },
+            { id: 35, cat: 'coffee', name: { ru: 'Молочный коктейль', kz: 'Сүт коктейлі' }, price: 1200 },
+            { id: 36, cat: 'coffee', name: { ru: 'Клубничный коктейль', kz: 'Құлпынай коктейлі' }, price: 1200 },
+            { id: 37, cat: 'coffee', name: { ru: 'Кофе капучино', kz: 'Капучино кофесі' }, price: 1000 },
+            { id: 38, cat: 'coffee', name: { ru: 'Кофе латте', kz: 'Латте кофесі' }, price: 1000 },
+            { id: 39, cat: 'coffee', name: { ru: 'Айс латте', kz: 'Айс латте' }, price: 1200 },
+            { id: 40, cat: 'coffee', name: { ru: 'Чай 3в1', kz: 'Шай 3в1' }, price: 300 },
+            { id: 41, cat: 'coffee', name: { ru: 'Кофе 3в1', kz: 'Кофе 3в1' }, price: 300 }
+        ];
+
+        let cart = {};
+        let currentCategory = 'all';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ru' ? 'kz' : 'ru';
+            document.getElementById('langToggleBtn').innerText = currentLang === 'ru' ? 'KZ / RU' : 'RU / KZ';
+            
+            document.getElementById('searchInput').placeholder = translations[currentLang].searchPlaceholder;
+            document.getElementById('deliveryText').innerText = translations[currentLang].delivery;
+            document.getElementById('orderBtnText').innerText = translations[currentLang].order;
+            document.getElementById('cartModalTitle').innerText = translations[currentLang].cartTitle;
+            document.getElementById('checkoutBtnText').innerText = translations[currentLang].checkout;
+
+            renderCategories();
+            renderMenu(getFilteredItems());
+            updateCartBar();
+        }
+
+        function renderCategories() {
+            const cats = ['all', 'doner', 'burger', 'pizza', 'breakfast', 'snack', 'drink', 'coffee'];
+            const container = document.getElementById('categoriesContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            cats.forEach(cat => {
+                let activeClass = currentCategory === cat ? 'active' : '';
+                container.innerHTML += `<button class="cat-btn ${activeClass}" onclick="filterCategory('${cat}', this)">${translations[currentLang].cats[cat]}</button>`;
+            });
+        }
+
+        function getFilteredItems() {
+            let query = document.getElementById('searchInput').value.toLowerCase();
+            return menuData.filter(item => {
+                let matchesCat = currentCategory === 'all' || item.cat === currentCategory;
+                let matchesQuery = item.name[currentLang].toLowerCase().includes(query) || item.name.ru.toLowerCase().includes(query);
+                return matchesCat && matchesQuery;
+            });
+        }
+
+        function renderMenu(items) {
+            const container = document.getElementById('menuContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (items.length === 0) {
+                container.innerHTML = `<p style="text-align:center; color:#888; margin-top:30px;">${translations[currentLang].notFound}</p>`;
+                return;
+            }
+
+            if (currentCategory === 'all') {
+                let grouped = {};
+                items.forEach(item => {
+                    if (!grouped[item.cat]) grouped[item.cat] = [];
+                    grouped[item.cat].push(item);
+                });
+
+                for (let cat in grouped) {
+                    container.innerHTML += `<div class="section-title">${translations[currentLang].cats[cat]}</div>`;
+                    grouped[cat].forEach(item => container.innerHTML += createItemHTML(item));
+                }
+            } else {
+                items.forEach(item => container.innerHTML += createItemHTML(item));
+            }
+        }
+
+        function createItemHTML(item) {
+            return `
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">${item.name[currentLang]}</div>
+                        <div class="item-price">${item.price} тг</div>
+                    </div>
+                    <button class="add-btn" onclick="addToCart(${item.id})">${translations[currentLang].addToCart}</button>
+                </div>
+            `;
+        }
+
+        function filterCategory(cat, btn) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            document.getElementById('searchInput').value = '';
+            renderMenu(getFilteredItems());
+        }
+
+        function filterMenu() {
+            renderMenu(getFilteredItems());
+        }
+
+        function addToCart(id) {
+            cart[id] = (cart[id] || 0) + 1;
+            updateCartBar();
+        }
+
+        function changeQty(id, delta) {
+            cart[id] = (cart[id] || 0) + delta;
+            if (cart[id] <= 0) delete cart[id];
+            updateCartBar();
+            renderCartModal();
+        }
+
+        function updateCartBar() {
+            let totalCount = Object.values(cart).reduce((a, b) => a + b, 0);
+            let bar = document.getElementById('cartBar');
+            if (!bar) return;
+            if (totalCount > 0) {
+                bar.style.display = 'flex';
+                document.getElementById('cartInfo').innerText = `${translations[currentLang].inCart} ${totalCount} шт.`;
+            } else {
+                bar.style.display = 'none';
+                closeCart();
+            }
+        }
+
+        function openCart() {
+            renderCartModal();
+            document.getElementById('cartModal').style.display = 'flex';
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        function renderCartModal() {
+            let list = document.getElementById('cartItemsList');
+            if (!list) return;
+            list.innerHTML = '';
+            let totalSum = 0;
+
+            for (let id in cart) {
+                let item = menuData.find(i => i.id == id);
+                let qty = cart[id];
+                let sum = item.price * qty;
+                totalSum += sum;
+
+                list.innerHTML += `
+                    <div class="cart-item-row">
+                        <div>
+                            <div style="font-weight:600;">${item.name[currentLang]}</div>
+                            <div style="font-size:12px; color:#aaa;">${item.price} тг × ${qty} = ${sum} тг</div>
+                        </div>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="changeQty(${id}, -1)">-</button>
+                            <span>${qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${id}, 1)">+</button>
+                        </div>
+                    </div>
+                `;
+            }
+            document.getElementById('cartTotalSum').innerText = `${translations[currentLang].total} ${totalSum} тг`;
+        }
+
+        function sendToWhatsApp() {
+            let text = currentLang === 'ru' ? "Здравствуйте! Хочу сделать заказ:\n\n" : "Сәлеметсіз бе! Тапсырыс бергім келеді:\n\n";
+            let totalSum = 0;
+
+            for (let id in cart) {
+                let item = menuData.find(i => i.id == id);
+                let qty = cart[id];
+                let sum = item.price * qty;
+                totalSum += sum;
+                text += `• ${item.name[currentLang]} x${qty} — ${sum} тг\n`;
+            }
+            text += currentLang === 'ru' ? `\n*Итого к оплате: ${totalSum} тг*` : `\n*Барлығы төлеуге: ${totalSum} тг*`;
+
+            let phone = "77002302331"; 
+            let url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+        }
+
+        // Запуск при полной загрузке страницы
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCategories();
+            renderMenu(menuData);
+        });
+    </script>
+</body>
+</html>
