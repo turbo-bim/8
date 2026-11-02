@@ -151,14 +151,22 @@
             padding: 12px;
             margin-bottom: 10px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 12px;
             border: 1px solid #2a2a2a;
+        }
+
+        .item-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #2a2a2a;
+            flex-shrink: 0;
         }
 
         .item-info {
             flex-grow: 1;
-            padding-right: 10px;
         }
 
         .item-name {
@@ -171,18 +179,18 @@
             font-size: 14px;
             font-weight: 700;
             color: var(--primary);
-            white-space: nowrap;
         }
 
         .add-btn {
             background: var(--primary);
             color: var(--dark);
             border: none;
-            padding: 6px 12px;
+            padding: 8px 12px;
             border-radius: 8px;
             font-weight: 700;
             font-size: 12px;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .cart-bar {
@@ -385,47 +393,47 @@
         };
 
         const menuData = [
-            { id: 1, cat: 'doner', name: { ru: 'Донер классический (курица / мясо)', kz: 'Классикалық донер (тауық / ет)' }, price: 1600 },
-            { id: 2, cat: 'doner', name: { ru: 'Донер сырный (курица / мясо)', kz: 'Ірімшікті донер (тауық / ет)' }, price: 1600 },
-            { id: 3, cat: 'doner', name: { ru: 'Донер фирменный (курица / мясо)', kz: 'Фирмалық донер (тауық / ет)' }, price: 1600 },
-            { id: 4, cat: 'doner', name: { ru: 'Донер говяжий', kz: 'Сиыр етінен донер' }, price: 2000 },
-            { id: 5, cat: 'doner', name: { ru: 'Донер жареный', kz: 'Қуырылған донер' }, price: 1800 },
-            { id: 6, cat: 'doner', name: { ru: 'Батон донер', kz: 'Батон донер' }, price: 1900 },
-            { id: 7, cat: 'doner', name: { ru: 'Твистер', kz: 'Твистер' }, price: 1800 },
-            { id: 8, cat: 'burger', name: { ru: 'Бургер говяжий', kz: 'Сиыр етінен бургер' }, price: 1800 },
-            { id: 9, cat: 'burger', name: { ru: 'Бургер со стрипсами', kz: 'Стрипстер қосылған бургер' }, price: 1600 },
-            { id: 10, cat: 'pizza', name: { ru: 'Пицца Пепперони', kz: 'Пепперони пиццасы' }, price: 2500 },
-            { id: 11, cat: 'pizza', name: { ru: 'Пицца Куриный', kz: 'Тауық етінен пицца' }, price: 2500 },
-            { id: 12, cat: 'pizza', name: { ru: 'Пицца Маргарита', kz: 'Маргарита пиццасы' }, price: 2300 },
-            { id: 13, cat: 'pizza', name: { ru: 'Пицца 4 сезона', kz: '4 маусым пиццасы' }, price: 2800 },
-            { id: 14, cat: 'breakfast', name: { ru: 'Английский завтрак', kz: 'Ағылшынша таңғы ас' }, price: 1800 },
-            { id: 15, cat: 'breakfast', name: { ru: 'Том ям', kz: 'Том ям' }, price: 3900 },
-            { id: 16, cat: 'breakfast', name: { ru: 'Классический рамен', kz: 'Классикалық рамен' }, price: 1700 },
-            { id: 17, cat: 'breakfast', name: { ru: 'Сырный рамен', kz: 'Ірімшікті рамен' }, price: 2200 },
-            { id: 18, cat: 'snack', name: { ru: 'Френч дог', kz: 'Френч дог' }, price: 1400 },
-            { id: 19, cat: 'snack', name: { ru: 'Острые куриные крылышки (10 шт)', kz: 'Ащы тауық қанаттары (10 дана)' }, price: 1950 },
-            { id: 20, cat: 'snack', name: { ru: 'Острые куриные крылышки (20 шт)', kz: 'Ащы тауық қанаттары (20 дана)' }, price: 3950 },
-            { id: 21, cat: 'snack', name: { ru: 'Острые куриные крылышки (30 шт)', kz: 'Ащы тауық қанаттары (30 дана)' }, price: 5950 },
-            { id: 22, cat: 'snack', name: { ru: 'Острые куриные крылышки (40 шт)', kz: 'Ащы тауық қанаттары (40 дана)' }, price: 7950 },
-            { id: 23, cat: 'snack', name: { ru: 'Наггетсы (10 шт)', kz: 'Наггетстер (10 дана)' }, price: 1800 },
-            { id: 24, cat: 'snack', name: { ru: 'Жареный судак (0.5 кг)', kz: 'Қуырылған судак (0.5 кг)' }, price: 3500 },
-            { id: 25, cat: 'snack', name: { ru: 'Фри', kz: 'Фри картобы' }, price: 800 },
-            { id: 26, cat: 'snack', name: { ru: 'Фри с сосиской', kz: 'Сосискасы бар фри' }, price: 1200 },
-            { id: 27, cat: 'drink', name: { ru: 'Кока кола 1л', kz: 'Кока кола 1л' }, price: 850 },
-            { id: 28, cat: 'drink', name: { ru: 'Кока Кола 0.5 л', kz: 'Кока Кола 0.5 л' }, price: 600 },
-            { id: 29, cat: 'drink', name: { ru: 'Фанта', kz: 'Фанта' }, price: 850 },
-            { id: 30, cat: 'drink', name: { ru: 'Спрайт', kz: 'Спрайт' }, price: 850 },
-            { id: 31, cat: 'drink', name: { ru: 'Пиала', kz: 'Пиала' }, price: 850 },
-            { id: 32, cat: 'drink', name: { ru: 'Фьюс ти', kz: 'Фьюс ти' }, price: 850 },
-            { id: 33, cat: 'drink', name: { ru: 'Ава лимонад 1л', kz: 'Ава лимонад 1л' }, price: 850 },
-            { id: 34, cat: 'drink', name: { ru: 'Ава апельсин', kz: 'Ава апельсин' }, price: 850 },
-            { id: 35, cat: 'coffee', name: { ru: 'Молочный коктейль', kz: 'Сүт коктейлі' }, price: 1200 },
-            { id: 36, cat: 'coffee', name: { ru: 'Клубничный коктейль', kz: 'Құлпынай коктейлі' }, price: 1200 },
-            { id: 37, cat: 'coffee', name: { ru: 'Кофе капучино', kz: 'Капучино кофесі' }, price: 1000 },
-            { id: 38, cat: 'coffee', name: { ru: 'Кофе латте', kz: 'Латте кофесі' }, price: 1000 },
-            { id: 39, cat: 'coffee', name: { ru: 'Айс латте', kz: 'Айс латте' }, price: 1200 },
-            { id: 40, cat: 'coffee', name: { ru: 'Чай 3в1', kz: 'Шай 3в1' }, price: 300 },
-            { id: 41, cat: 'coffee', name: { ru: 'Кофе 3в1', kz: 'Кофе 3в1' }, price: 300 }
+            { id: 1, cat: 'doner', name: { ru: 'Донер классический (курица / мясо)', kz: 'Классикалық донер (тауық / ет)' }, price: 1600, img: 'https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=200' },
+            { id: 2, cat: 'doner', name: { ru: 'Донер сырный (курица / мясо)', kz: 'Ірімшікті донер (тауық / ет)' }, price: 1600, img: 'https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=200' },
+            { id: 3, cat: 'doner', name: { ru: 'Донер фирменный (курица / мясо)', kz: 'Фирмалық донер (тауық / ет)' }, price: 1600, img: 'https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=200' },
+            { id: 4, cat: 'doner', name: { ru: 'Донер говяжий', kz: 'Сиыр етінен донер' }, price: 2000, img: 'https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=200' },
+            { id: 5, cat: 'doner', name: { ru: 'Донер жареный', kz: 'Қуырылған донер' }, price: 1800, img: 'https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=200' },
+            { id: 6, cat: 'doner', name: { ru: 'Батон донер', kz: 'Батон донер' }, price: 1900, img: 'https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=200' },
+            { id: 7, cat: 'doner', name: { ru: 'Твистер', kz: 'Твистер' }, price: 1800, img: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=200' },
+            { id: 8, cat: 'burger', name: { ru: 'Бургер говяжий', kz: 'Сиыр етінен бургер' }, price: 1800, img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200' },
+            { id: 9, cat: 'burger', name: { ru: 'Бургер со стрипсами', kz: 'Стрипстер қосылған бургер' }, price: 1600, img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=200' },
+            { id: 10, cat: 'pizza', name: { ru: 'Пицца Пепперони', kz: 'Пепперони пиццасы' }, price: 2500, img: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=200' },
+            { id: 11, cat: 'pizza', name: { ru: 'Пицца Куриный', kz: 'Тауық етінен пицца' }, price: 2500, img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=200' },
+            { id: 12, cat: 'pizza', name: { ru: 'Пицца Маргарита', kz: 'Маргарита пиццасы' }, price: 2300, img: 'https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=200' },
+            { id: 13, cat: 'pizza', name: { ru: 'Пицца 4 сезона', kz: '4 маусым пиццасы' }, price: 2800, img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=200' },
+            { id: 14, cat: 'breakfast', name: { ru: 'Английский завтрак', kz: 'Ағылшынша таңғы ас' }, price: 1800, img: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=200' },
+            { id: 15, cat: 'breakfast', name: { ru: 'Том ям', kz: 'Том ям' }, price: 3900, img: 'https://images.unsplash.com/photo-1548943487-a2e4e43b4853?w=200' },
+            { id: 16, cat: 'breakfast', name: { ru: 'Классический рамен', kz: 'Классикалық рамен' }, price: 1700, img: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=200' },
+            { id: 17, cat: 'breakfast', name: { ru: 'Сырный рамен', kz: 'Ірімшікті рамен' }, price: 2200, img: 'https://images.unsplash.com/photo-1612929633738-8fe46f7ec841?w=200' },
+            { id: 18, cat: 'snack', name: { ru: 'Френч дог', kz: 'Френч дог' }, price: 1400, img: 'https://images.unsplash.com/photo-1619740455993-9e612b1af08a?w=200' },
+            { id: 19, cat: 'snack', name: { ru: 'Острые куриные крылышки (10 шт)', kz: 'Ащы тауық қанаттары (10 дана)' }, price: 1950, img: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=200' },
+            { id: 20, cat: 'snack', name: { ru: 'Острые куриные крылышки (20 шт)', kz: 'Ащы тауық қанаттары (20 дана)' }, price: 3950, img: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=200' },
+            { id: 21, cat: 'snack', name: { ru: 'Острые куриные крылышки (30 шт)', kz: 'Ащы тауық қанаттары (30 дана)' }, price: 5950, img: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=200' },
+            { id: 22, cat: 'snack', name: { ru: 'Острые куриные крылышки (40 шт)', kz: 'Ащы тауық қанаттары (40 дана)' }, price: 7950, img: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=200' },
+            { id: 23, cat: 'snack', name: { ru: 'Наггетсы (10 шт)', kz: 'Наггетстер (10 дана)' }, price: 1800, img: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=200' },
+            { id: 24, cat: 'snack', name: { ru: 'Жареный судак (0.5 кг)', kz: 'Қуырылған судак (0.5 кг)' }, price: 3500, img: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=200' },
+            { id: 25, cat: 'snack', name: { ru: 'Фри', kz: 'Фри картобы' }, price: 800, img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=200' },
+            { id: 26, cat: 'snack', name: { ru: 'Фри с сосиской', kz: 'Сосискасы бар фри' }, price: 1200, img: 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=200' },
+            { id: 27, cat: 'drink', name: { ru: 'Кока кола 1л', kz: 'Кока кола 1л' }, price: 850, img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=200' },
+            { id: 28, cat: 'drink', name: { ru: 'Кока Кола 0.5 л', kz: 'Кока Кола 0.5 л' }, price: 600, img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=200' },
+            { id: 29, cat: 'drink', name: { ru: 'Фанта', kz: 'Фанта' }, price: 850, img: 'https://images.unsplash.com/photo-1624513441658-d561d56e2974?w=200' },
+            { id: 30, cat: 'drink', name: { ru: 'Спрайт', kz: 'Спрайт' }, price: 850, img: 'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=200' },
+            { id: 31, cat: 'drink', name: { ru: 'Пиала', kz: 'Пиала' }, price: 850, img: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=200' },
+            { id: 32, cat: 'drink', name: { ru: 'Фьюс ти', kz: 'Фьюс ти' }, price: 850, img: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200' },
+            { id: 33, cat: 'drink', name: { ru: 'Ава лимонад 1л', kz: 'Ава лимонад 1л' }, price: 850, img: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=200' },
+            { id: 34, cat: 'drink', name: { ru: 'Ава апельсин', kz: 'Ава апельсин' }, price: 850, img: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?w=200' },
+            { id: 35, cat: 'coffee', name: { ru: 'Молочный коктейль', kz: 'Сүт коктейлі' }, price: 1200, img: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=200' },
+            { id: 36, cat: 'coffee', name: { ru: 'Клубничный коктейль', kz: 'Құлпынай коктейлі' }, price: 1200, img: 'https://images.unsplash.com/photo-1577805947697-89e18249d767?w=200' },
+            { id: 37, cat: 'coffee', name: { ru: 'Кофе капучино', kz: 'Капучино кофесі' }, price: 1000, img: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=200' },
+            { id: 38, cat: 'coffee', name: { ru: 'Кофе латте', kz: 'Латте кофесі' }, price: 1000, img: 'https://images.unsplash.com/photo-1561047029-3000c68339ca?w=200' },
+            { id: 39, cat: 'coffee', name: { ru: 'Айс латте', kz: 'Айс латте' }, price: 1200, img: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=200' },
+            { id: 40, cat: 'coffee', name: { ru: 'Чай 3в1', kz: 'Шай 3в1' }, price: 300, img: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=200' },
+            { id: 41, cat: 'coffee', name: { ru: 'Кофе 3в1', kz: 'Кофе 3в1' }, price: 300, img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=200' }
         ];
 
         let cart = {};
@@ -496,6 +504,7 @@
         function createItemHTML(item) {
             return `
                 <div class="menu-item">
+                    <img src="${item.img}" alt="${item.name[currentLang]}" class="item-img" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200'">
                     <div class="item-info">
                         <div class="item-name">${item.name[currentLang]}</div>
                         <div class="item-price">${item.price} тг</div>
@@ -599,7 +608,6 @@
             window.open(url, '_blank');
         }
 
-        // Запуск при полной загрузке страницы
         window.addEventListener('DOMContentLoaded', () => {
             renderCategories();
             renderMenu(menuData);
